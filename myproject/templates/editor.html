@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compilador C+0-</title>
+    <title>Expanding Sidebar Menu</title>
 </head>
 <body>
         <!-- Top Bar with Toggle Button -->
@@ -59,20 +59,18 @@
     </div>
     <div class="output">
         <h2>Salida de Código</h2>
-        <div class="output-container">
-            <table id="outputTable" class="output-table">
-                <thead>
-                    <tr>
-                        <th>Token</th>
-                        <th>Tipo</th>
-                        <th>Línea</th>
-                        <th>Columna</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        <button onclick="analyzeCode()">Análisis</button>
+        <table id="outputTable" class="output-table">
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Tipo</th>
+                    <th>Línea</th>
+                    <th>Columna</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <button onclick="analyzeCode()">Compilar</button>
     </div>
 </div>
 
@@ -102,6 +100,7 @@ codeEditor.addEventListener('input', updateLineNumbers);
 codeEditor.addEventListener('scroll', () => {
     lineNumbers.scrollTop = codeEditor.scrollTop;
 });
+
 
 function analyzeCode() {
             const code = codeEditor.value;
@@ -140,6 +139,7 @@ function analyzeCode() {
                 console.error('Error:', error);
             });
         }
+
         const keywords = ["int", "float", "string", "boolean", "if", "else", "while", "for", "true", "false"];
 
     function highlightSyntax() {
@@ -190,258 +190,275 @@ function analyzeCode() {
 </html>
 
 <style>
-/* static/css/style.css */
+    /* static/css/style.css */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    color: #e0e0e0;
-    background-color: #2c2c2c;
-}
-
-.container {
-    display: flex;
-    height: 100vh;
-}
-
-/* Top Bar */
-.top-bar {
-    display: flex;
-    align-items: center;
-    background-color: #1a2023; 
-    border-bottom: 1px solid #404040;
-    color: #fff;
-    padding: 15px 10px 10px 1.5rem;
-    width: 100%;
-}
-
-.top-bar h1 {
-    margin-left: 50px;
-    animation: neon 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes neon {
-    from {
-        text-shadow:
-        0 0 6px rgba(25, 255, 192, 0.92),
-        0 0 30px rgba(25, 255, 192, 0.34),
-        0 0 12px rgba(25, 255, 192, 0.52),
-        0 0 21px rgba(25, 255, 192, 0.92),
-        0 0 34px rgba(25, 255, 192, 0.78),
-        0 0 54px rgba(25, 255, 192, 0.92);
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-    to {
-        text-shadow:
-        0 0 6px rgba(25, 255, 192, 0.98),
-        0 0 30px rgba(25, 255, 192, 0.42),
-        0 0 12px rgba(25, 255, 192, 0.58),
-        0 0 22px rgba(25, 255, 192, 0.84),
-        0 0 38px rgba(25, 255, 192, 0.88),
-        0 0 60px rgba(25, 255, 192, 1);
+
+    body {
+        font-family: Arial, sans-serif;
+        color: #e0e0e0;
+        background-color: #2c2c2c;
     }
-}
 
+    .container {
+        display: flex;
+        height: 100vh;
+    }
 
-.menu-button {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.2em;
-    cursor: pointer;
-}
+    /* Top Bar */
+    .top-bar {
+        display: flex;
+        align-items: center;
+        background-color: #1a2023;
+        border-bottom: 1px solid #404040;
+        color: #fff;
+        padding: 15px 10px 10px 1.5rem;
+        width: 100%;
+    }
 
-/* Sidebar */
-.sidebar {
-    width: 60px;
-    background-color: #1a2023;
-    overflow: hidden;
-    transition: width 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    border-right: 1px solid #404040;
-    color: #6E7674;
-}
+    .top-bar h1 {
+        margin-left: 50px;
+        animation: neon 1.5s ease-in-out infinite alternate;
+    }
 
-.sidebar.expanded {
-    width: 200px;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-}
-
-.sidebar li {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    width: 100%;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.sidebar li:hover {
-    color: #fff;
-    border-left: 2px solid #85ffc7;
-}
-
-.icon {
-    font-size: 1.5em;
-    width: 30px;
-    text-align: center;
-    margin-right: 0;
-}
-
-.text {
-    display: none;
-    font-size: 1em;
-}
-
-.sidebar.expanded .text {
-    display: inline;
-    margin-left: 10px;
-}
-
-/* CSS styling */
-.main-content {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    width: 100%;
-}
-
-.editor, .output {
-    flex: 1; /* Esto hace que ocupen el 50% del espacio cada uno */
-    /* border: 1px solid #ccc; */
-    border-radius: 5px;
-    overflow: auto;
-}
-
-.editor h2, .output h2 {
-    background-color: #1e1e1e;
-    color: #fff;
-    padding: 12px;
-    font-size: 16px;
-    border-bottom: 1px solid #404040;
-    margin: 0;
-}
-
-/* Ajustes de desplazamiento y scroll en el editor */
-.editor-container {
-    display: flex;
-    position: relative;
-    background-color: #1e1e1e;
-    height: 400px; /* Ajusta según tu diseño */
-    overflow: hidden;
-}
-
-.line-numbers {
-    padding: 10px;
-    background-color: #333;
-    color: #888;
-    text-align: right;
-    font-family: monospace;
-    font-size: 14px;
-    user-select: none;
-    overflow-y: hidden;
-    border-right: 1px solid #404040;
-    height: 100%; /* Asegura que el scroll esté sincronizado */
-}
-
-.line-numbers span {
-    display: block;
-    height: 20px;
-}
-
-.code-editor {
-    width: 100%;
-    padding: 10px;
-    color: #eee;
-    background-color: #1e1e1e;
-    border: none;
-    outline: none;
-    font-family: monospace;
-    font-size: 14px;
-    resize: none;
-    line-height: 20px;
-    overflow: auto; /* Permite scroll horizontal y vertical */
-    white-space: nowrap; /* Evita que el texto se envuelva */
-}
-
-/* Estilos del scrollbar */
-.code-editor::-webkit-scrollbar,
-.line-numbers::-webkit-scrollbar {
-    width: 12px;
-    height: 10px; /* Añade scroll horizontal */
-}
-
-.code-editor::-webkit-scrollbar-track,
-.line-numbers::-webkit-scrollbar-track {
-    background: #333;
-    border-radius: 10px;
-}
-
-.code-editor::-webkit-scrollbar-thumb,
-.line-numbers::-webkit-scrollbar-thumb {
-    background-color: #555;
-    border-radius: 10px;
-    border: 2px solid #333;
-}
-
-.code-editor::-webkit-scrollbar-thumb:hover,
-.line-numbers::-webkit-scrollbar-thumb:hover {
-    background-color: #888;
-}
-
-svg{
-    margin-left: 3px;
-}
-
-.keyword {
-            color: blue;
-            font-weight: bold;
+    @keyframes neon {
+        from {
+            text-shadow:
+                0 0 6px rgba(25, 255, 192, 0.92),
+                0 0 30px rgba(25, 255, 192, 0.34),
+                0 0 12px rgba(25, 255, 192, 0.52),
+                0 0 21px rgba(25, 255, 192, 0.92),
+                0 0 34px rgba(25, 255, 192, 0.78),
+                0 0 54px rgba(25, 255, 192, 0.92);
         }
-.string-literal {
-            color: darkgreen;
-}
-.number-literal {
-            color: darkmagenta;
-        }
-        .output-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        .output-table th, .output-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        .output-table th {
-            background-color: #3b3b3b;
-        }
-/* Estilos del scrollbar */
-.output::-webkit-scrollbar {
-    width: 12px;
-    height: 10px; /* Añade scroll horizontal */
-}
 
-.output::-webkit-scrollbar-track {
-    background: #333;
-    border-radius: 10px;
-}
+        to {
+            text-shadow:
+                0 0 6px rgba(25, 255, 192, 0.98),
+                0 0 30px rgba(25, 255, 192, 0.42),
+                0 0 12px rgba(25, 255, 192, 0.58),
+                0 0 22px rgba(25, 255, 192, 0.84),
+                0 0 38px rgba(25, 255, 192, 0.88),
+                0 0 60px rgba(25, 255, 192, 1);
+        }
+    }
 
-.output::-webkit-scrollbar-thumb{
-    background-color: #555;
-    border-radius: 10px;
-    border: 2px solid #333;
-}
+
+    .menu-button {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.2em;
+        cursor: pointer;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 60px;
+        background-color: #1a2023;
+        overflow: hidden;
+        transition: width 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20px;
+        border-right: 1px solid #404040;
+        color: #6E7674;
+    }
+
+    .sidebar.expanded {
+        width: 200px;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        width: 100%;
+    }
+
+    .sidebar li {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        width: 100%;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .sidebar li:hover {
+        color: #fff;
+        border-left: 2px solid #85ffc7;
+    }
+
+    .icon {
+        font-size: 1.5em;
+        width: 30px;
+        text-align: center;
+        margin-right: 0;
+    }
+
+    .text {
+        display: none;
+        font-size: 1em;
+    }
+
+    .sidebar.expanded .text {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    /* CSS styling */
+    .main-content {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+        width: 100%;
+    }
+
+    .editor,
+    .output {
+        flex: 1;
+        /* Esto hace que ocupen el 50% del espacio cada uno */
+        /* border: 1px solid #ccc; */
+        border-radius: 5px;
+        overflow: auto;
+    }
+
+    .editor h2,
+    .output h2 {
+        background-color: #1e1e1e;
+        color: #fff;
+        padding: 12px;
+        font-size: 16px;
+        border-bottom: 1px solid #404040;
+        margin: 0;
+    }
+
+    /* Ajustes de desplazamiento y scroll en el editor */
+    .editor-container {
+        display: flex;
+        position: relative;
+        background-color: #1e1e1e;
+        height: 400px;
+        /* Ajusta según tu diseño */
+        overflow: hidden;
+    }
+
+    .line-numbers {
+        padding: 10px;
+        background-color: #333;
+        color: #888;
+        text-align: right;
+        font-family: monospace;
+        font-size: 14px;
+        user-select: none;
+        overflow-y: hidden;
+        border-right: 1px solid #404040;
+        height: 100%;
+        /* Asegura que el scroll esté sincronizado */
+    }
+
+    .line-numbers span {
+        display: block;
+        height: 20px;
+    }
+
+    .code-editor {
+        width: 100%;
+        padding: 10px;
+        color: #eee;
+        background-color: #1e1e1e;
+        border: none;
+        outline: none;
+        font-family: monospace;
+        font-size: 14px;
+        resize: none;
+        line-height: 20px;
+        overflow: auto;
+        /* Permite scroll horizontal y vertical */
+        white-space: nowrap;
+        /* Evita que el texto se envuelva */
+    }
+
+    /* Estilos del scrollbar */
+    .code-editor::-webkit-scrollbar,
+    .line-numbers::-webkit-scrollbar {
+        width: 12px;
+        height: 10px;
+        /* Añade scroll horizontal */
+    }
+
+    .code-editor::-webkit-scrollbar-track,
+    .line-numbers::-webkit-scrollbar-track {
+        background: #333;
+        border-radius: 10px;
+    }
+
+    .code-editor::-webkit-scrollbar-thumb,
+    .line-numbers::-webkit-scrollbar-thumb {
+        background-color: #555;
+        border-radius: 10px;
+        border: 2px solid #333;
+    }
+
+    .code-editor::-webkit-scrollbar-thumb:hover,
+    .line-numbers::-webkit-scrollbar-thumb:hover {
+        background-color: #888;
+    }
+
+    svg {
+        margin-left: 3px;
+    }
+
+    .keyword {
+        color: blue;
+        font-weight: bold;
+    }
+
+    .string-literal {
+        color: darkgreen;
+    }
+
+    .number-literal {
+        color: darkmagenta;
+    }
+
+    .output-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .output-table th,
+    .output-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .output-table th {
+        background-color: #3b3b3b;
+    }
+
+    /* Estilos del scrollbar */
+    .output::-webkit-scrollbar {
+        width: 12px;
+        height: 10px;
+        /* Añade scroll horizontal */
+    }
+
+    .output::-webkit-scrollbar-track {
+        background: #333;
+        border-radius: 10px;
+    }
+
+    .output::-webkit-scrollbar-thumb {
+        background-color: #555;
+        border-radius: 10px;
+        border: 2px solid #333;
+    }
 </style>

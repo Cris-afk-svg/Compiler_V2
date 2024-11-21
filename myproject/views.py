@@ -1,7 +1,7 @@
 # views.py
 from django.shortcuts import render
 from django.http import JsonResponse
-from .compiler import lexical_analysis # Importa tu lexer
+from .lexical import lexical_analysis # Importa tu lexer
 
 def editor(request):
     return render(request, 'editor.html')
